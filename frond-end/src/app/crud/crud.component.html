@@ -1,0 +1,242 @@
+<head>
+  <meta charset="utf-8">
+  <title>HR System</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e9e0e0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 10px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      color: #090808;
+    }
+
+    table {
+      width: 100%;
+      margin-bottom: 20px;
+      
+    }
+
+    th,
+    td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #170404;
+      color: #e8e5e5;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #b7b4b4;
+    }
+
+    .card {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .card-header {
+      padding: 10px;
+      background-color: #5c0303;
+      color: #fff;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #858282;
+      border-radius: 4px;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background-color: #4f024f;
+      color: #fff;
+      border: none;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+    }
+  </style>
+</head>
+
+<div class="container">
+  <h2>Manage Branches</h2>
+
+  <!-- Branches Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Building Number</th>
+        <th>Street</th>
+        <th>Area</th>
+        <th>City</th>
+        <th>Country</th>
+        <th>Manager</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let branch of branches">
+        <td>{{ branch.b_name }}</td>
+        <td>{{ branch.b_building_no }}</td>
+        <td>{{ branch.b_st }}</td>
+        <td>{{ branch.b_area }}</td>
+        <td>{{ branch.b_city }}</td>
+        <td>{{ branch.b_country }}</td>
+        <td>{{ getEmployeeName(branch.b_manager) }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="editBranch(branch)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteBranch(branch)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Create or Edit Branch Form -->
+  <div class="card">
+    <div class="card-header">{{ branchFormTitle }}</div>
+    <div class="card-body">
+      <form #branchForm="ngForm" (ngSubmit)="submitBranchForm()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="branchFormValues.b_name" required>
+        </div>
+        <div class="form-group">
+          <label for="buildingNo">Building Number</label>
+          <input type="text" class="form-control" id="buildingNo" name="buildingNo" [(ngModel)]="branchFormValues.b_building_no" required>
+        </div>
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input type="text" class="form-control" id="street" name="street" [(ngModel)]="branchFormValues.b_st" required>
+        </div>
+        <div class="form-group">
+          <label for="area">Area</label>
+          <input type="text" class="form-control" id="area" name="area" [(ngModel)]="branchFormValues.b_area" required>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" class="form-control" id="city" name="city" [(ngModel)]="branchFormValues.b_city" required>
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input type="text" class="form-control" id="country" name="country" [(ngModel)]="branchFormValues.b_country" required>
+        </div>
+        <div class="form-group">
+          <label for="manager">Manager</label>
+          <select class="form-control" id="manager" name="manager" [(ngModel)]="branchFormValues.b_manager">
+            <option value="">No Manager</option>
+            <option *ngFor="let employee of employees" [value]="employee.e_id">{{ employee.e_name }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <h2>Manage Employees</h2>
+
+  <!-- Employees Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Branch</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td>{{ employee.e_name }}</td>
+        <td>{{ employee.e_age }}</td>
+        <td>{{ employee.e_email }}</td>
+        <td>{{ employee.e_phone_number }}</td>
+        <td>{{ getBranchName(employee.e_branch) }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="editEmployee(employee)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteEmployee(employee)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Create or Edit Employee Form -->
+  <div class="card">
+    <div class="card-header">{{ employeeFormTitle }}</div>
+    <div class="card-body">
+      <form #employeeForm="ngForm" (ngSubmit)="submitEmployeeForm()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="employeeFormValues.e_name" required>
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" class="form-control" id="age" name="age" [(ngModel)]="employeeFormValues.e_age" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="employeeFormValues.e_email" required>
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="employeeFormValues.e_phone_number" required>
+        </div>
+        <div class="form-group">
+          <label for="branch">Branch</label>
+          <select class="form-control" id="branch" name="branch" [(ngModel)]="employeeFormValues.e_branch">
+            <option value="">No Branch</option>
+            <option *ngFor="let branch of branches" [value]="branch.b_id">{{ branch.b_name }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+
