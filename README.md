@@ -1,5 +1,8 @@
 # HR-Management-Django-Angular-App-
 Branch and Employee Management System
+![image](https://github.com/ReemAbdelghany/HR-Management-Django-Angular-App-/assets/127961912/4d2c8762-c29c-479a-ac43-dd9db2523636)
+![image](https://github.com/ReemAbdelghany/HR-Management-Django-Angular-App-/assets/127961912/158ef9c1-f722-41aa-bdc8-6ad6650ac14a)
+
 # Project Title
 
 HR Management System
