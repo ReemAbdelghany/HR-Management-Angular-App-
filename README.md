@@ -31,7 +31,7 @@ The HR Management System consists of a frontend implemented using Angular, a bac
 - phpMyAdmin
 
 ## Installation and Setup
-1. Clone the repository: `git clone https://github.com/your-username/repository.git`
+1. Clone the repository: `git clone https://github.com/ReemAbdelghany/HR-Management-Django-Angular-App-/tree/master.git`
 2. Install Angular dependencies: `npm install`
 3. Install Django dependencies: `pip install -r requirements.txt`
 4. Set up MySQL database using phpMyAdmin or any other MySQL management tool.
