@@ -31,15 +31,24 @@ The HR Management System consists of a frontend implemented using Angular, a bac
 - phpMyAdmin
 
 ## Installation and Setup
-
 1. Clone the repository: `git clone https://github.com/your-username/repository.git`
 2. Install Angular dependencies: `npm install`
 3. Install Django dependencies: `pip install -r requirements.txt`
 4. Set up MySQL database using phpMyAdmin or any other MySQL management tool.
-5. Update the database configuration in the Django settings file.
+5. -Set up an empty MySQL database named `hr`.
+   -Install the required Django packages for MySQL: `pip install dj-database-url mysqlclient`
+  -Configure the database connection in the Django `settings.py` file:
+  python
+import dj_database_url
+
+DATABASES['default'] = dj_database_url.parse('mysql://root@localhost/hr')
+-Run the Django migration command to create the database tables: `python manage.py makemigrations`
+-Apply the migrations to the database: `python manage.py migrate`
 6. Run the Django development server: `python manage.py runserver`
 7. Run the Angular development server: `ng serve`
 8. Access the application in a web browser: `http://localhost:4200`
+
+
 
 ## Usage
 
